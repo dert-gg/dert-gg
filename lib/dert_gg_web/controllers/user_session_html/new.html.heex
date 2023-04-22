@@ -1,12 +1,15 @@
+<div class="text-[2rem] mx-auto max-w-sm text-center mb-5">
+  <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">dert.gg</span>
+</div>
+
 <div class="mx-auto max-w-sm">
   <.header class="text-center">
-    Sign in to account
+    Giriş yap
     <:subtitle>
-      Don't have an account?
+      Hesabın yok mu?
       <.link navigate={~p"/users/register"} class="font-semibold text-brand hover:underline">
-        Sign up
+        Üye ol
       </.link>
-      for an account now.
     </:subtitle>
   </.header>
 
@@ -14,17 +17,17 @@
     <.error :if={@error_message}><%= @error_message %></.error>
 
     <.input field={f[:email]} type="email" label="Email" required />
-    <.input field={f[:password]} type="password" label="Password" required />
+    <.input field={f[:password]} type="password" label="Şifre" required />
 
     <:actions :let={f}>
-      <.input field={f[:remember_me]} type="checkbox" label="Keep me logged in" />
-      <.link href={~p"/users/reset_password"} class="text-sm font-semibold">
-        Forgot your password?
-      </.link>
+      <.input field={f[:remember_me]} type="checkbox" label="Beni hatırla" />
+      <!-- <.link href={~p"/users/reset_password"} class="text-sm font-semibold"> -->
+      <!--   Şifremi unuttum -->
+      <!-- </.link> -->
     </:actions>
     <:actions>
-      <.button phx-disable-with="Signing in..." class="w-full">
-        Sign in <span aria-hidden="true">→</span>
+      <.button phx-disable-with="Giriş yapılıyor..." class="w-full">
+        Giriş yap<span aria-hidden="true">→</span>
       </.button>
     </:actions>
   </.simple_form>

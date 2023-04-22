@@ -1,13 +1,13 @@
 <.header class="text-center">
-  Account Settings
-  <:subtitle>Manage your account email address and password settings</:subtitle>
+  Hesap ayarları
+  <:subtitle>Email adresi ya da şifreni buradan değiştirebilirsin</:subtitle>
 </.header>
 
 <div class="space-y-12 divide-y">
   <div>
     <.simple_form :let={f} for={@email_changeset} action={~p"/users/settings"} id="update_email">
       <.error :if={@email_changeset.action}>
-        Oops, something went wrong! Please check the errors below.
+        Hiçbir şey olmamış ise kesinlikle bir şeyler oldu. Aşağıdaki hataları kontrol et.
       </.error>
 
       <.input field={f[:action]} type="hidden" name="action" value="update_email" />
@@ -17,12 +17,12 @@
         field={f[:current_password]}
         name="current_password"
         type="password"
-        label="Current Password"
+        label="Şu anki şifre"
         required
         id="current_password_for_email"
       />
       <:actions>
-        <.button phx-disable-with="Changing...">Change Email</.button>
+        <.button phx-disable-with="Changing...">Email değiştir</.button>
       </:actions>
     </.simple_form>
   </div>
@@ -34,16 +34,16 @@
       id="update_password"
     >
       <.error :if={@password_changeset.action}>
-        Oops, something went wrong! Please check the errors below.
+        Hiçbir şey olmamış ise kesinlikle bir şeyler oldu. Aşağıdaki hataları kontrol et.
       </.error>
 
       <.input field={f[:action]} type="hidden" name="action" value="update_password" />
 
-      <.input field={f[:password]} type="password" label="New password" required />
+      <.input field={f[:password]} type="password" label="Yeni şifre" required />
       <.input
         field={f[:password_confirmation]}
         type="password"
-        label="Confirm new password"
+        label="Yeni şifre tekrar"
         required
       />
 
@@ -51,12 +51,12 @@
         field={f[:current_password]}
         name="current_password"
         type="password"
-        label="Current password"
+        label="Şu anki şifre"
         id="current_password_for_password"
         required
       />
       <:actions>
-        <.button phx-disable-with="Changing...">Change Password</.button>
+        <.button phx-disable-with="Changing...">Şifre değiştir</.button>
       </:actions>
     </.simple_form>
   </div>
