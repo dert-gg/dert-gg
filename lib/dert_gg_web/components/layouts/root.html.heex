@@ -15,47 +15,54 @@
     </script>
   </head>
   <body class="bg-white antialiased">
-    <ul class="mt-4 relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
-      <%= if @current_user do %>
-        <li class="text-[1rem] leading-6 text-zinc-900">
-          <%= @current_user.email %>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/settings"}
-            class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Ayarlar
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/log_out"}
-            method="delete"
-            class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Çıkış yap
-          </.link>
-        </li>
-      <% else %>
-        <li>
-          <.link
-            href={~p"/users/register"}
-            class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Üye ol
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/users/log_in"}
-            class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Giriş yap
-          </.link>
-        </li>
-      <% end %>
-    </ul>
+    <div class="mx-auto flex mt-2 justify-between">
+      <div class="flex items-center px-4 sm:px-6 lg:px-8 xl:px-28">
+        <.link href={~p"/"} class="text-[2rem] font-bold">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">dert.gg</span>
+        </.link>
+      </div>
+      <ul class="z-10 sm:items-center gap-1 sm:gap-4 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row ">
+        <%= if @current_user do %>
+          <li class="text-[1rem] leading-6 text-zinc-900">
+            <%= @current_user.email %>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/settings"}
+              class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Ayarlar
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_out"}
+              method="delete"
+              class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Çıkış yap
+            </.link>
+          </li>
+        <% else %>
+          <li>
+            <.link
+              href={~p"/users/register"}
+              class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Üye ol
+            </.link>
+          </li>
+          <li>
+            <.link
+              href={~p"/users/log_in"}
+              class="text-[1rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+            >
+              Giriş yap
+            </.link>
+          </li>
+        <% end %>
+      </ul>
+    </div>
     <%= @inner_content %>
   </body>
 </html>
