@@ -10,21 +10,39 @@ defmodule DertGgWeb.RoomChannel do
   end
 
   @impl true
-  def join("room:" <> room_id, payload, socket) do
+  def join("room:" <> room_id, %{"jwt" => jwt}, socket) when is_nil(jwt) or jwt == "" do
+    Sentry.Context.set_tags_context(%{room_id: room_id})
+    vote_counts = Votes.vote_counts_by_topic_id(room_id)
+
+    {:ok, vote_counts, socket}
+  end
+
+  @impl true
+  def join("room:" <> room_id, %{"jwt" => jwt}, socket) when is_binary(jwt) do
     Sentry.Context.set_tags_context(%{room_id: room_id})
 
-    case payload["jwt"] do
-      jwt when jwt in ["", nil] ->
-        vote_counts = Votes.vote_counts_by_topic_id(room_id)
+    case JwtToken.verify_and_validate(jwt) do
+      {:ok, claims} ->
+        user_id = claims["user_id"]
+        Sentry.Context.set_user_context(%{id: user_id})
+        vote_counts = Votes.vote_counts_by_topic_id(room_id, user_id)
+
         {:ok, vote_counts, socket}
 
-      jwt ->
-        {:ok, claims} = JwtToken.verify_and_validate(jwt)
-        Sentry.Context.set_user_context(%{id: claims["user_id"]})
-        vote_counts = Votes.vote_counts_by_topic_id(room_id, claims["user_id"])
+      {:error, reason} ->
+        Sentry.capture_message("Invalid JWT token", extra: %{reason: reason})
+        vote_counts = Votes.vote_counts_by_topic_id(room_id)
 
         {:ok, vote_counts, socket}
     end
+  end
+
+  @impl true
+  def join("room:" <> room_id, _, socket) do
+    Sentry.Context.set_tags_context(%{room_id: room_id})
+    vote_counts = Votes.vote_counts_by_topic_id(room_id)
+
+    {:ok, vote_counts, socket}
   end
 
   ################# UPVOTE #################
