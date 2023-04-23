@@ -61,7 +61,6 @@ config :phoenix, :json_library, Jason
 
 # Sentry config
 config :sentry,
-  dsn: System.fetch_env!("SENTRY_DSN"),
   environment_name: Mix.env(),
   included_environments: [:prod, :dev],
   root_source_code_path: [File.cwd!()]
