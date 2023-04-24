@@ -13,7 +13,11 @@ defmodule DertGgWeb.Endpoint do
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
-  socket "/socket", DertGgWeb.UserSocket, websocket: true, longpoll: false
+
+  socket "/socket",
+         DertGgWeb.UserSocket,
+         websocket: [check_origin: ["chrome-extension://ockadlekmaibojkgilmijlmpliafdhga"]],
+         longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
   #

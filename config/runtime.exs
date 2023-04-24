@@ -65,6 +65,8 @@ if config_env() == :prod do
 
   config :sentry, dsn: System.fetch_env!("SENTRY_DSN")
 
+  config :joken, default_signer: System.fetch_env!("JWT_SIGNER")
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key
