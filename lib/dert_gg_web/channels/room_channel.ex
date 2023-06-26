@@ -4,6 +4,8 @@ defmodule DertGgWeb.RoomChannel do
   alias DertGg.Accounts.JwtToken
   alias DertGg.Votes
 
+  require Logger
+
   @impl true
   def join("room:lobby", _payload, socket) do
       {:ok, socket}
@@ -25,6 +27,7 @@ defmodule DertGgWeb.RoomChannel do
       {:ok, claims} ->
         user_id = claims["user_id"]
         Sentry.Context.set_user_context(%{id: user_id})
+        Logger.metadata(user_id: user_id)
         vote_counts = Votes.vote_counts_by_topic_id(room_id, user_id)
 
         {:ok, vote_counts, socket}
@@ -131,8 +134,7 @@ defmodule DertGgWeb.RoomChannel do
 
   @impl true
   def terminate(reason, socket) do
-    IO.puts("RoomChannel terminated: #{inspect(reason)}")
-    IO.puts("\tSocket: #{inspect(socket)}")
+    Logger.info("Channel terminated", reason: inspect(reason), topic: socket.topic, channel: socket.channel)
   end
 
   defp get_topic_id("room:" <> topic_id) do
