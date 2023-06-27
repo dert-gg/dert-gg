@@ -8,7 +8,7 @@ defmodule DertGgWeb.RoomChannel do
 
   @impl true
   def join("room:lobby", _payload, socket) do
-      {:ok, socket}
+    {:ok, socket}
   end
 
   @impl true
@@ -59,7 +59,6 @@ defmodule DertGgWeb.RoomChannel do
   def handle_in("upvote", %{"jwt" => jwt}, socket) when not is_binary(jwt) do
     {:reply, :unauthorized, socket}
   end
-
 
   @impl true
   def handle_in("upvote", %{"jwt" => jwt} = payload, socket) do
@@ -139,7 +138,11 @@ defmodule DertGgWeb.RoomChannel do
 
   @impl true
   def terminate(reason, socket) do
-    Logger.info("Channel terminated", reason: inspect(reason), topic: socket.topic, channel: socket.channel)
+    Logger.info("Channel terminated",
+      reason: inspect(reason),
+      topic: socket.topic,
+      channel: socket.channel
+    )
   end
 
   defp get_topic_id("room:" <> topic_id) do
