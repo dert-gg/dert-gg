@@ -138,7 +138,7 @@ defmodule DertGgWeb.RoomChannel do
 
   @impl true
   def terminate(reason, socket) do
-    Logger.info("Channel terminated",
+    Logger.error("Channel terminated",
       reason: inspect(reason),
       topic: socket.topic,
       channel: socket.channel
