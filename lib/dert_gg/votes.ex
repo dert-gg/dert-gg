@@ -22,14 +22,21 @@ defmodule DertGg.Votes do
   end
 
   def delete_vote(params) do
-    Logger.info("Unvoting entry ##{params.entry_id}.",
-      user_id: params.user_id,
-      entry_id: params.entry_id
-    )
+    case Repo.get_by(Vote, params) do
+      nil ->
+        Logger.warn("Trying to unvote entry ##{params.entry_id} without no vote cast.",
+          user_id: params.user_id,
+          entry_id: params.entry_id
+        )
 
-    Vote
-    |> Repo.get_by(params)
-    |> Repo.delete()
+      vote ->
+        Logger.info("Unvoting entry ##{params.entry_id}.",
+          user_id: params.user_id,
+          entry_id: params.entry_id
+        )
+
+        Repo.delete(vote)
+    end
   end
 
   def aggregate_votes(entry_id) do
