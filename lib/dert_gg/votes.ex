@@ -8,13 +8,25 @@ defmodule DertGg.Votes do
 
   import Ecto.Query
 
+  require Logger
+
   def create_vote!(params) do
+    Logger.info("Voting for entry ##{params.entry_id}.",
+      user_id: params.user_id,
+      entry_id: params.entry_id
+    )
+
     %Vote{}
     |> Vote.changeset(params)
     |> Repo.insert!()
   end
 
   def delete_vote!(params) do
+    Logger.info("Unvoting entry ##{params.entry_id}.",
+      user_id: params.user_id,
+      entry_id: params.entry_id
+    )
+
     Vote
     |> Repo.get_by(params)
     |> Repo.delete!()
