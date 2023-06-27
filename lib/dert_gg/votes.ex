@@ -10,7 +10,7 @@ defmodule DertGg.Votes do
 
   require Logger
 
-  def create_vote!(params) do
+  def create_vote(params) do
     Logger.info("Voting for entry ##{params.entry_id}.",
       user_id: params.user_id,
       entry_id: params.entry_id
@@ -18,10 +18,10 @@ defmodule DertGg.Votes do
 
     %Vote{}
     |> Vote.changeset(params)
-    |> Repo.insert!()
+    |> Repo.insert()
   end
 
-  def delete_vote!(params) do
+  def delete_vote(params) do
     Logger.info("Unvoting entry ##{params.entry_id}.",
       user_id: params.user_id,
       entry_id: params.entry_id
@@ -29,7 +29,7 @@ defmodule DertGg.Votes do
 
     Vote
     |> Repo.get_by(params)
-    |> Repo.delete!()
+    |> Repo.delete()
   end
 
   def aggregate_votes(entry_id) do

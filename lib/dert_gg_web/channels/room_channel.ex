@@ -69,7 +69,7 @@ defmodule DertGgWeb.RoomChannel do
         topic_id = get_topic_id(socket.topic)
         user_id = claims["user_id"]
 
-        Votes.create_vote!(%{
+        Votes.create_vote(%{
           entry_id: entry_id,
           topic_id: topic_id,
           user_id: user_id
@@ -112,7 +112,7 @@ defmodule DertGgWeb.RoomChannel do
         entry_id = payload["entry_id"]
         user_id = claims["user_id"]
 
-        Votes.delete_vote!(%{entry_id: entry_id, user_id: user_id})
+        Votes.delete_vote(%{entry_id: entry_id, user_id: user_id})
 
         broadcast(socket, "vote_count_changed", %{
           entry_id: entry_id,
