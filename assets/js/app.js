@@ -22,8 +22,6 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import Bowser from "../vendor/bowser"
-// Not sure why I was importing this, this shouldn't be imported as we don't want to connect to the user socket
-// import "./user_socket"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
