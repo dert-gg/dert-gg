@@ -9,7 +9,10 @@ defmodule DertGg.Application do
   def start(_type, _args) do
     Logger.add_backend(Sentry.LoggerBackend)
 
+    topologies = Application.get_env(:libcluster, :topologies) || []
+
     children = [
+      {Cluster.Supervisor, [topologies, [name: DertGg.ClusterSupervisor]]},
       # Start the Telemetry supervisor
       DertGgWeb.Telemetry,
       # Start the Ecto repository

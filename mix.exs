@@ -41,6 +41,7 @@ defmodule DertGg.MixProject do
       {:hackney, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:joken, "~> 2.6"},
+      {:libcluster, "~> 3.3"},
       {:logger_json, "~> 5.1"},
       {:phoenix, "~> 1.7.2"},
       {:phoenix_ecto, "~> 4.4"},
